@@ -1,0 +1,15 @@
+<!-- views/estudantes/show.ejs -->
+
+<h1>Detalhes do estudante</h1>
+
+<p><strong>Nome:</strong> <%= estudante.nome %></p>
+<p><strong>Data de nascimento:</strong> <%= estudante.data_nascimento %></p>
+<p><strong>Endereço:</strong> <%= estudante.endereco %></p>
+<p><strong>Telefone:</strong> <%= estudante.telefone %></p>
+
+<a href="/estudantes/<%= estudante.id %>/edit">Editar</a>
+
+<form action="/estudantes/<%= estudante.id %>" method="POST">
+  <input type="hidden" name="_method" value="DELETE">
+  <button type="submit">Excluir</button>
+</form>

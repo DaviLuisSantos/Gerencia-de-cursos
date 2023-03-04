@@ -3,14 +3,17 @@ const app = express();
 const path = require('path');
 const router = express.Router();
 const Estudante = require('../models/Estudante');
-
+const bodyParser = require('body-parser');
+const sequelize = require('../config/db');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.json());
 
-// rota para listar todos os estudantes
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+
 router.get('/', async (req, res) => {
     try {
         const estudantes = await Estudante.findAll();
@@ -21,24 +24,23 @@ router.get('/', async (req, res) => {
     }
 });
 
-// rota para exibir o formulário de criação de estudante
 router.get('/new', (req, res) => {
     res.render('estudantes/new');
 });
 
-// rota para criar um novo estudante
-router.post('/', async (req, res) => {
+router.post('/new', async (req, res) => {
     const { nome, data_nascimento, endereco, telefone } = req.body;
     try {
+        console.log(endereco);
         const estudante = await Estudante.create({ nome, data_nascimento, endereco, telefone });
         res.redirect('/estudantes');
+        console.log(estudante);
     } catch (err) {
         console.error(err);
         res.status(500).send('Erro ao criar estudante');
     }
 });
 
-// rota para exibir os detalhes de um estudante
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     try {
@@ -54,7 +56,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// rota para exibir o formulário de edição de um estudante
 router.get('/:id/edit', async (req, res) => {
     const id = req.params.id;
     try {
@@ -70,8 +71,7 @@ router.get('/:id/edit', async (req, res) => {
     }
 });
 
-// rota para atualizar os dados de um estudante
-router.put('/:id', async (req, res) => {
+router.put('/:id/edit', async (req, res) => {
     const id = req.params.id;
     const { nome, data_nascimento, endereco, telefone } = req.body;
     try {
@@ -88,8 +88,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// rota para excluir um estudante
-router.delete('/:id', async (req, res) => {
+router.delete('/:id/excluir', async (req, res) => {
     const id = req.params.id;
     try {
         const estudante = await Estudante.findByPk(id);
@@ -104,4 +103,5 @@ router.delete('/:id', async (req, res) => {
         res.status(500).send('Erro ao atualizar estudante');
     }
 });
+
 module.exports = router;

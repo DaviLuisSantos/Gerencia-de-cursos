@@ -1,0 +1,24 @@
+<!-- views/estudantes/edit.ejs -->
+
+<h1>Editar estudante</h1>
+
+<form action="/estudantes/<%= estudante.id %>" method="POST">
+  <input type="hidden" name="_method" value="PUT">
+  <div>
+    <label for="nome">Nome:</label>
+    <input type="text" name="nome" value="<%= estudante.nome %>" required>
+  </div>
+  <div>
+    <p>Data de Nascimento: <%= estudante.data_nascimento ? new Date(estudante.data_nascimento).toISOString().slice(0, 10) : '' %></p>
+    <input type="date" name="data_nascimento" value="<%= estudante.data_nascimento ? new Date(estudante.data_nascimento).toISOString().substring(0, 10) : '' %>" required>
+  </div>
+  <div>
+    <label for="endereco">Endereço:</label>
+    <input type="text" name="endereco" value="<%= estudante.endereco %>" required>
+  </div>
+  <div>
+    <label for="telefone">Telefone:</label>
+    <input type="text" name="telefone" value="<%= estudante.telefone %>" required>
+  </div>
+  <button type="submit">Atualizar</button>
+</form>

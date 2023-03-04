@@ -8,8 +8,12 @@ const Curso = require('./models/Curso');
 const Matricula = require('./models/Matricula');
 const estudantesRoutes = require('./routes/estudantes');
 
+db.sync()
 
 app.set('view engine', 'ejs');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // Testa a conexão com o banco de dados
