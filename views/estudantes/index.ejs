@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Lista de Estudantes</title>
+  </head>
+  <body>
+    <h1>Lista de Estudantes</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Data de Nascimento</th>
+          <th>Endereço</th>
+          <th>Telefone</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% estudantes.forEach(function(estudante) { %>
+        <tr>
+          <td><%= estudante.id %></td>
+          <td><%= estudante.nome %></td>
+          <td><%= estudante.data_nascimento %></td>
+          <td><%= estudante.endereco %></td>
+          <td><%= estudante.telefone %></td>
+          <td>
+            <a href="/estudantes/<%= estudante.id %>" title="Visualizar">
+              Visualizar
+            </a>
+            <a href="/estudantes/<%= estudante.id %>/editar" title="Editar">
+              Editar
+            </a>
+            <form
+              action="/estudantes/<%= estudante.id %>"
+              method="POST"
+              style="display: inline;"
+            >
+              <input type="hidden" name="_method" value="DELETE" />
+              <button type="submit" title="Excluir">Excluir</button>
+            </form>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <a href="/estudantes/novo" title="Adicionar">Adicionar Estudante</a>
+  </body>
+</html>
